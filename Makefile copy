@@ -1,0 +1,21 @@
+CFLAGS = -std=c++17 -O2
+LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+
+SRCS = main.cpp src/app.cpp
+
+debug: CFLAGS += -g
+
+all: $(SRCS)
+	g++ $(CFLAGS) -o $@ $(SRCS) $(LDFLAGS)
+
+.PHONY: all exec clean
+
+exec: all
+	./VulkanTest
+
+debug: all
+	gdb ./VulkanTest
+
+clean:
+	rm -f all
+	rm -f VulkanTest
