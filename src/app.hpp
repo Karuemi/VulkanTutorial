@@ -96,6 +96,9 @@ private:
     std::vector<VkDeviceMemory> uniformBuffersMemory;
     std::vector<void*> uniformBuffersMapped;
 
+    VkDescriptorPool descriptorPool;
+    std::vector<VkDescriptorSet> descriptorSets;
+
     const std::vector<const char*> deviceExtensions;
 
     std::vector<VkSemaphore> imageAvailableSemaphores;
@@ -132,8 +135,9 @@ private:
 
     void createRenderPass();
 
-    void createDescriptorPool();
     void createDescriptorSetLayout();
+    void createDescriptorPool();
+    void createDescriptorSets();
 
     void createGraphicsPipeline();
     VkShaderModule createShaderModule(const std::vector<char>& code);
