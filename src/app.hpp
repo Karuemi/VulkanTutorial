@@ -5,6 +5,11 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include <chrono>
 #include <cstdint>
 #include <iostream>
 #include <stdexcept>
@@ -73,6 +78,7 @@ private:
     std::vector<VkImageView> swapChainImageViews;
 
     VkRenderPass renderPass;
+    VkDescriptorSetLayout descriptorSetLayout;
     VkPipelineLayout pipelineLayout;
     VkPipeline graphicsPipeline;
 
@@ -85,6 +91,10 @@ private:
     VkDeviceMemory vertexBufferMemory;
     VkBuffer indexBuffer;
     VkDeviceMemory indexBufferMemory;
+    
+    std::vector<VkBuffer> uniformBuffers;
+    std::vector<VkDeviceMemory> uniformBuffersMemory;
+    std::vector<void*> uniformBuffersMapped;
 
     const std::vector<const char*> deviceExtensions;
 
@@ -122,6 +132,9 @@ private:
 
     void createRenderPass();
 
+    void createDescriptorPool();
+    void createDescriptorSetLayout();
+
     void createGraphicsPipeline();
     VkShaderModule createShaderModule(const std::vector<char>& code);
 
@@ -134,11 +147,12 @@ private:
     void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, 
         VkBuffer& buffer, VkDeviceMemory& bufferMemory);
     void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
+    uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
     void createVertexBuffer();
     void createIndexBuffer();
-    uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
-
+    void createUniformBuffers();
+    
     void createSyncObjects();
 
     void createLogicalDevice();
@@ -147,6 +161,7 @@ private:
 
     void mainLoop();
 
+    void updateUniformBuffer(uint32_t currentImage);
     void drawFrame();
 
     void populateVertices();
