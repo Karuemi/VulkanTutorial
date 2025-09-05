@@ -83,6 +83,8 @@ private:
 
     VkBuffer vertexBuffer;
     VkDeviceMemory vertexBufferMemory;
+    VkBuffer indexBuffer;
+    VkDeviceMemory indexBufferMemory;
 
     const std::vector<const char*> deviceExtensions;
 
@@ -93,6 +95,7 @@ private:
     bool framebufferResized;
 
     std::vector<Vertex> vertices;
+    std::vector<uint16_t> indices;
 
 	void initWindow();
     static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
@@ -133,6 +136,7 @@ private:
     void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
     void createVertexBuffer();
+    void createIndexBuffer();
     uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
     void createSyncObjects();
