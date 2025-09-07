@@ -1,6 +1,6 @@
 STB_INCLUDE_PATH = /usr/include/stb
 
-CFLAGS = -std=c++17 -O2 -I$(STB_INCLUDE_PATH)
+CFLAGS = -std=c++17 -O3 -I$(STB_INCLUDE_PATH)
 LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 SRCS = main.cpp src/app.cpp src/struct.cpp

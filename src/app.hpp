@@ -11,6 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <stb/stb_image.h>
+#include <tiny_obj_loader.h>
 
 #include <chrono>
 #include <cstdint>
@@ -51,6 +52,9 @@ public:
 private:
     const uint32_t WIDTH;
     const uint32_t HEIGHT;
+
+    const std::string MODEL_PATH;
+    const std::string TEXTURE_PATH;
 
     const std::vector<const char*> validationLayers;
 
@@ -120,7 +124,7 @@ private:
     bool framebufferResized;
 
     std::vector<Vertex> vertices;
-    std::vector<uint16_t> indices;
+    std::vector<uint32_t> indices;
 
 	void initWindow();
     static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
@@ -203,7 +207,8 @@ private:
     void updateUniformBuffer(uint32_t currentImage);
     void drawFrame();
 
-    void populateVertices();
+    void populateVerticesSimpleSquare();
+    void loadModel();
 
     void cleanupSwapChain();
     void cleanup();
