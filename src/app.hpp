@@ -28,6 +28,7 @@
 #include <fstream>
 #include <array>
 
+#include "audio_player.hpp"
 #include "struct.hpp"
 
 struct SwapChainSupportDetails {
@@ -132,6 +133,8 @@ private:
 
     std::vector<Vertex> vertices;
     std::vector<uint32_t> indices;
+
+    AudioPlayer audioPlayer;
 
 	void initWindow();
     static void framebufferResizeCallback(GLFWwindow* window, int width, int height);

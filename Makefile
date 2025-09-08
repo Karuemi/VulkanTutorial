@@ -1,9 +1,9 @@
 STB_INCLUDE_PATH = /usr/include/stb
 
 CFLAGS = -std=c++17 -O3 -I$(STB_INCLUDE_PATH)
-LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi -lopenal -lmpg123
 
-SRCS = main.cpp src/app.cpp src/struct.cpp
+SRCS = main.cpp src/app.cpp src/struct.cpp src/audio_player.cpp
 SHADER_DIR = shaders
 SHADER_SRCS = $(SHADER_DIR)/shader.vert $(SHADER_DIR)/shader.frag
 SHADER_OUTPUTS = $(SHADER_DIR)/vert.spv $(SHADER_DIR)/frag.spv

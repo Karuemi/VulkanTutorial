@@ -19,8 +19,8 @@
 HelloTriangleApplication::HelloTriangleApplication()
     :   WIDTH(800),
         HEIGHT(600),
-        MODEL_PATH("models/viking_room.obj"),
-        TEXTURE_PATH("textures/viking_room.png"),
+        MODEL_PATH("models/kitty.obj"),
+        TEXTURE_PATH("textures/kitty.png"),
         validationLayers({"VK_LAYER_KHRONOS_validation"}),
         MAX_FRAMES_IN_FLIGHT(3),
         currentFrame(0),
@@ -69,7 +69,8 @@ HelloTriangleApplication::HelloTriangleApplication()
         inFlightFences(),
         framebufferResized(false),
         vertices(),
-        indices()
+        indices(),
+        audioPlayer()
 {}
 
 HelloTriangleApplication::~HelloTriangleApplication() 
@@ -79,7 +80,13 @@ void HelloTriangleApplication::run() {
     initWindow();
     initVulkan();
 
+    audioPlayer.init();
+    audioPlayer.loadMP3("audio/kitty.mp3");
+    audioPlayer.play();
+
     mainLoop();
+
+    audioPlayer.cleanup();
 
     cleanup();
 }
@@ -1604,13 +1611,13 @@ void HelloTriangleApplication::updateUniformBuffer(uint32_t currentImage) {
     float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
 
     UniformBufferObject ubo{};
-    ubo.model = glm::rotate(glm::mat4(1), time * glm::radians(1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float) swapChainExtent.height, 0.1f, 10.0f);
-    // ubo.model = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    // ubo.model = glm::rotate(ubo.model, 0.1f * powf(time, 2) * glm::radians(360.0f), glm::vec3(0.0f, -1.0f, 0.0f));
-    // ubo.view = glm::lookAt(glm::vec3(100.0f, 100.0f, 50.0f), glm::vec3(0.0f, 0.0f, 15.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    // ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float) swapChainExtent.height, 1.0f, 1000.0f);
+    // ubo.model = glm::rotate(glm::mat4(1), time * glm::radians(1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    // ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    // ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float) swapChainExtent.height, 0.1f, 10.0f);
+    ubo.model = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    ubo.model = glm::rotate(ubo.model, 0.1f * powf(time, 2) * glm::radians(360.0f), glm::vec3(0.0f, -1.0f, 0.0f));
+    ubo.view = glm::lookAt(glm::vec3(100.0f, 100.0f, 50.0f), glm::vec3(0.0f, 0.0f, 15.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float) swapChainExtent.height, 1.0f, 1000.0f);
 
     ubo.proj[1][1] *= -1; // without will render image upside down
 
