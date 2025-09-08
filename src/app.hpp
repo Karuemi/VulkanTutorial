@@ -198,7 +198,7 @@ private:
     void createTextureImageView();
     void createTextureSampler();
 
-    void generateMipmaps(VkImage image, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
+    void generateMipmaps(VkImage image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
     
     void createSyncObjects();
 
