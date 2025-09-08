@@ -114,6 +114,11 @@ private:
     VkDeviceMemory depthImageMemory;
     VkImageView depthImageView;
 
+    VkSampleCountFlagBits msaaSamples;
+    VkImage colorImage;
+    VkDeviceMemory colorImageMemory;
+    VkImageView colorImageView;
+
     VkDescriptorPool descriptorPool;
     std::vector<VkDescriptorSet> descriptorSets;
 
@@ -189,7 +194,7 @@ private:
     void createUniformBuffers();
 
     void createTextureImage();
-    void createImage(uint32_t width, uint32_t height, uint32_t mipLevels, VkFormat format, VkImageTiling tiling,
+    void createImage(uint32_t width, uint32_t height, uint32_t mipLevels, VkSampleCountFlagBits numSamples, VkFormat format, VkImageTiling tiling,
         VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
     void transitionImageLayout(VkCommandBuffer commandBuffer, VkImage image, VkFormat format,
         VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipLevels);
@@ -200,6 +205,9 @@ private:
 
     void generateMipmaps(VkImage image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
     
+    VkSampleCountFlagBits getMaxUsableSampleCount();
+    void createColorResources();
+
     void createSyncObjects();
 
     void createLogicalDevice();
